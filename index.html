@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referendum 8/9 Giugno 2025</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            font-family: 'Orbitron', monospace;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -20px) rotate(1deg); }
+            50% { transform: translate(20px, -10px) rotate(-1deg); }
+            75% { transform: translate(-10px, 20px) rotate(0.5deg); }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .title h1 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff; }
+            to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 60px #00ffff; }
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            isolation: isolate;
+        }
+        
+        .card-wrapper {
+            perspective: 1000px;
+            height: 300px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            z-index: 2;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+            z-index: 2;
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            border: 2px solid;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: absolute;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+        
+        .card-front::before, .card-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .card-back {
+            transform: rotateY(180deg);
+            padding: 1rem;
+        }
+        
+        /* Card colors and effects */
+        .card-1 .card-front {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 200, 0, 0.1));
+            border-color: #00ff00;
+            box-shadow: 0 8px 32px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+        
+        .card-1 .card-back {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.3), rgba(0, 150, 0, 0.2));
+            border-color: #00ff00;
+            box-shadow: 0 8px 32px rgba(0, 255, 0, 0.4), inset 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+        
+        .card-2 .card-front {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 140, 0, 0.1));
+            border-color: #ffa500;
+            box-shadow: 0 8px 32px rgba(255, 165, 0, 0.3), inset 0 0 20px rgba(255, 165, 0, 0.1);
+        }
+        
+        .card-2 .card-back {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 140, 0, 0.2));
+            border-color: #ffa500;
+            box-shadow: 0 8px 32px rgba(255, 165, 0, 0.4), inset 0 0 20px rgba(255, 165, 0, 0.2);
+        }
+        
+        .card-3 .card-front {
+            background: linear-gradient(135deg, rgba(128, 128, 128, 0.2), rgba(169, 169, 169, 0.1));
+            border-color: #808080;
+            box-shadow: 0 8px 32px rgba(128, 128, 128, 0.3), inset 0 0 20px rgba(128, 128, 128, 0.1);
+        }
+        
+        .card-3 .card-back {
+            background: linear-gradient(135deg, rgba(128, 128, 128, 0.3), rgba(169, 169, 169, 0.2));
+            border-color: #808080;
+            box-shadow: 0 8px 32px rgba(128, 128, 128, 0.4), inset 0 0 20px rgba(128, 128, 128, 0.2);
+        }
+        
+        .card-4 .card-front {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(220, 20, 60, 0.1));
+            border-color: #ff0000;
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.3), inset 0 0 20px rgba(255, 0, 0, 0.1);
+        }
+        
+        .card-4 .card-back {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(220, 20, 60, 0.2));
+            border-color: #ff0000;
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4), inset 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        .card-5 .card-front {
+            background: linear-gradient(135deg, rgba(255, 255, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border-color: #ffff00;
+            box-shadow: 0 8px 32px rgba(255, 255, 0, 0.3), inset 0 0 20px rgba(255, 255, 0, 0.1);
+        }
+        
+        .card-5 .card-back {
+            background: linear-gradient(135deg, rgba(255, 255, 0, 0.3), rgba(255, 215, 0, 0.2));
+            border-color: #ffff00;
+            box-shadow: 0 8px 32px rgba(255, 255, 0, 0.4), inset 0 0 20px rgba(255, 255, 0, 0.2);
+        }
+        
+        .card-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 20px currentColor;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px currentColor;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: #cccccc;
+            opacity: 0.8;
+        }
+        
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .question-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+        
+        .flip-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.7rem;
+            color: #ffffff;
+            opacity: 0.6;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) scale(1.01);
+        }
+        
+        .card.flipped:hover {
+            transform: rotateY(180deg) translateY(-5px) scale(1.01);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .card-wrapper {
+                height: 280px;
+            }
+            
+            .card-number {
+                font-size: 3rem;
+            }
+            
+            .card-title {
+                font-size: 1rem;
+            }
+            
+            .question-title {
+                font-size: 1rem;
+            }
+            
+            .question-text {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title h1 {
+                font-size: 1.4rem;
+            }
+            
+            .card-wrapper {
+                height: 250px;
+            }
+            
+            .card-front, .card-back {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Referendum 8/9 Giugno 2025<br>L'importanza del Sì</h1>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="card-wrapper">
+                <div class="card card-1" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">
+                        <div class="card-number">1</div>
+                        <div class="card-title">SCHEDA VERDE</div>
+                        <div class="card-subtitle">Clicca per vedere il quesito</div>
+                        <div class="flip-hint">↻ FLIP</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="question-title">Quesito 1 - Scheda Verde</div>
+                        <div class="question-text">
+                            <strong>Ripristino del reintegro per licenziamenti illegittimi.</strong><br><br>
+                            Diciamo Sì al diritto di tornare al lavoro in caso di licenziamento senza giusta causa.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-wrapper">
+                <div class="card card-2" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">
+                        <div class="card-number">2</div>
+                        <div class="card-title">SCHEDA ARANCIONE</div>
+                        <div class="card-subtitle">Clicca per vedere il quesito</div>
+                        <div class="flip-hint">↻ FLIP</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="question-title">Quesito 2 - Scheda Arancione</div>
+                        <div class="question-text">
+                            <strong>Maggiore discrezionalità ai giudici nelle cause di lavoro.</strong><br><br>
+                            Sì per permettere ai giudici di valutare caso per caso, garantendo equità.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-wrapper">
+                <div class="card card-3" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">
+                        <div class="card-number">3</div>
+                        <div class="card-title">SCHEDA GRIGIA</div>
+                        <div class="card-subtitle">Clicca per vedere il quesito</div>
+                        <div class="flip-hint">↻ FLIP</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="question-title">Quesito 3 - Scheda Grigia</div>
+                        <div class="question-text">
+                            <strong>Limitazione dell'uso dei contratti a termine tramite agenzie.</strong><br><br>
+                            Sì per contrastare la precarietà e promuovere contratti stabili.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-wrapper">
+                <div class="card card-4" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">
+                        <div class="card-number">4</div>
+                        <div class="card-title">SCHEDA ROSSA</div>
+                        <div class="card-subtitle">Clicca per vedere il quesito</div>
+                        <div class="flip-hint">↻ FLIP</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="question-title">Quesito 4 - Scheda Rossa</div>
+                        <div class="question-text">
+                            <strong>Responsabilità solidale negli appalti per la sicurezza sul lavoro.</strong><br><br>
+                            Sì per tutelare i lavoratori anche nelle catene di subappalto.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-wrapper">
+                <div class="card card-5" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">
+                        <div class="card-number">5</div>
+                        <div class="card-title">SCHEDA GIALLA</div>
+                        <div class="card-subtitle">Clicca per vedere il quesito</div>
+                        <div class="flip-hint">↻ FLIP</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="question-title">Quesito 5 - Scheda Gialla</div>
+                        <div class="question-text">
+                            <strong>Facilitazione dell'accesso alla cittadinanza italiana.</strong><br><br>
+                            Sì per un'Italia più inclusiva, che riconosce chi cresce e vive nel nostro Paese.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple inline approach - should definitely work
+        console.log('Script loaded');
+    </script>
+</body>
+</html>
